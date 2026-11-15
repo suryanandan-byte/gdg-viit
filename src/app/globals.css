@@ -166,18 +166,6 @@ body {
   }
 }
 
-/* Swipe hint: arrow nudges right to show the row scrolls sideways. */
-@keyframes swipe-nudge {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(6px); }
-}
-.animate-swipe-nudge {
-  animation: swipe-nudge 1.1s ease-in-out infinite;
-}
-@media (prefers-reduced-motion: reduce) {
-  .animate-swipe-nudge { animation: none; }
-}
-
 /* Halftone pattern utility */
 .bg-halftone {
   background-image: radial-gradient(rgba(17, 17, 17, 0.16) 1.5px, transparent 1.5px);

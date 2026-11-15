@@ -146,12 +146,8 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Disclaimer & Attribution */}
+        {/* Bottom Attribution */}
         <div className="mt-12 flex flex-col gap-3 border-t-2 border-cream/20 pt-8 sm:flex-row sm:items-center sm:justify-between font-mono text-xs text-cream/75">
-          <p>
-            Not an official Google website. GDG on Campus chapters are
-            independent community groups.
-          </p>
           <p className="font-extrabold text-g-yellow">
             Built by GDG Team VIIT
           </p>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke-width="11" stroke-linecap="round">
+  <!-- GDG < > mark: same four strokes as the splash and navbar logo -->
+  <path d="M8 32 23 18" stroke="#ea4335"/>
+  <path d="M8 32 23 46" stroke="#4285f4"/>
+  <path d="M56 32 41 18" stroke="#34a853"/>
+  <path d="M56 32 41 46" stroke="#fbbc04"/>
+</svg>

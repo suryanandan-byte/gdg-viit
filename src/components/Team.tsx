@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 
 /* ------------------------------------------------------------------ */
 /*  Role styling + back-of-card copy, shared by everyone in that role  */
@@ -140,7 +140,7 @@ function initials(name: string) {
 /** Photo slot: shows the photo when set, otherwise a dashed placeholder with initials. */
 function PhotoSlot({ member }: { member: TeamMember }) {
   return (
-    <div className="relative h-44 w-44 sm:h-32 sm:w-32 overflow-hidden rounded-[8px] border-[3px] border-ink bg-cream shadow-[4px_4px_0_#111]">
+    <div className="relative h-32 w-32 overflow-hidden rounded-[8px] border-[3px] border-ink bg-cream shadow-[4px_4px_0_#111]">
       {member.photo ? (
         <Image
           src={member.photo}
@@ -267,7 +267,7 @@ function IdCard({ member, badgeNo, delay, isFlipped, onToggle, springConfig, red
       aria-pressed={isFlipped}
       tabIndex={0}
       aria-label={`${member.role} ID card for ${member.name}. Tap, click or press Enter to flip.`}
-      className={`group perspective-1000 h-[390px] w-[78vw] max-w-[300px] shrink-0 snap-center sm:h-[350px] sm:w-full sm:max-w-none cursor-pointer select-none ${
+      className={`group perspective-1000 h-[350px] w-full cursor-pointer select-none ${
         isFlipped ? "is-flipped" : ""
       }`}
     >
@@ -405,63 +405,112 @@ function TierLabel({ label, count, bg }: { label: string; count: number; bg: str
       <span className="shrink-0 font-mono text-[11px] font-extrabold text-ink/60">
         {String(count).padStart(2, "0")} MEMBERS
       </span>
-      {/* Mobile-only swipe hint */}
-      <span
-        aria-hidden="true"
-        className="inline-flex shrink-0 items-center gap-1 rounded-[3px] border-2 border-ink bg-g-yellow px-1.5 py-0.5 font-mono text-[10px] font-extrabold uppercase text-ink sm:hidden"
-      >
-        Swipe <span className="animate-swipe-nudge inline-block">→</span>
-      </span>
     </div>
   );
 }
 
-/**
- * Phones: one horizontal row that scrolls sideways, with the next card peeking in.
- * The first time the row comes into view it nudges sideways and back, so it's clear it swipes.
- * From `sm` up it becomes a normal grid (`gridClass`).
- */
-function SwipeRow({
-  children,
-  gridClass,
-  reducedMotion,
-  label,
-}: {
-  children: ReactNode;
-  gridClass: string;
-  reducedMotion: boolean;
-  label: string;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.6 });
+/* ------------------------------------------------------------------ */
+/*  Phones: no flip cards and no sideways scrolling. Core leadership   */
+/*  is a 2x2 photo grid, domain leads a compact roster that scrolls    */
+/*  with the page. From `sm` up the flip ID cards take over.           */
+/* ------------------------------------------------------------------ */
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!inView || !el || reducedMotion) return;
-    if (!window.matchMedia("(max-width: 639px)").matches) return;
-    if (el.scrollWidth <= el.clientWidth || el.scrollLeft > 0) return;
-    // Slide the row left and back (a transform, so it works regardless of scroll-snap / smooth-scroll support).
-    const anim = el.animate(
-      [
-        { transform: "translateX(0)" },
-        { transform: "translateX(-80px)", offset: 0.45 },
-        { transform: "translateX(-80px)", offset: 0.6 },
-        { transform: "translateX(0)" },
-      ],
-      { duration: 1300, delay: 400, easing: "cubic-bezier(0.22, 1, 0.36, 1)" },
-    );
-    return () => anim.cancel();
-  }, [inView, reducedMotion]);
-
+function ProfileButtons({ member }: { member: TeamMember }) {
   return (
+    <>
+      {SOCIALS.map((soc) => {
+        const href = PROFILE_LINKS[member.id]?.[soc.key];
+        const box = "grid h-8 min-w-10 flex-1 place-items-center rounded-[4px] px-2 font-mono text-[11px] font-extrabold";
+        return href ? (
+          <a
+            key={soc.key}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${member.name} on ${soc.title} (opens in a new tab)`}
+            className={`${box} bg-cream text-ink brutal-btn`}
+          >
+            {soc.label}
+          </a>
+        ) : (
+          <span
+            key={soc.key}
+            aria-label={`${member.name} has no ${soc.title} link yet`}
+            className={`${box} border-2 border-dashed border-ink/40 text-ink/35`}
+          >
+            {soc.label}
+          </span>
+        );
+      })}
+    </>
+  );
+}
+
+function MiniPhoto({ member, sizes }: { member: TeamMember; sizes: string }) {
+  return member.photo ? (
+    <Image
+      src={member.photo}
+      alt={`Photo of ${member.name}, ${member.role}`}
+      fill
+      sizes={sizes}
+      className="object-cover object-[center_25%]"
+    />
+  ) : (
     <div
-      ref={ref}
-      role="group"
-      aria-label={label}
-      className={`-mx-4 flex flex-row flex-nowrap gap-4 overflow-x-auto px-4 pb-4 pt-1 snap-x snap-mandatory scroll-px-4 sm:mx-0 sm:grid sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 ${gridClass}`}
+      role="img"
+      aria-label={`Photo placeholder for ${member.name}`}
+      className="grid h-full w-full place-items-center bg-halftone font-display text-xl font-extrabold text-ink"
     >
-      {children}
+      {initials(member.name)}
     </div>
+  );
+}
+
+function LeaderTile({ member }: { member: TeamMember }) {
+  const style = ROLE_STYLES[member.role];
+  return (
+    <li className="flex flex-col rounded-[8px] border-[3px] border-ink bg-white p-2 shadow-[4px_4px_0_#111]">
+      <div className="relative aspect-square w-full overflow-hidden rounded-[5px] border-[3px] border-ink bg-cream">
+        <MiniPhoto member={member} sizes="(max-width: 639px) 45vw, 1px" />
+        <span
+          className={`absolute left-1.5 top-1.5 rounded-[3px] border-2 border-ink px-1.5 py-px font-mono text-[9px] font-extrabold uppercase shadow-[2px_2px_0_#111] ${style.roleBg}`}
+        >
+          {member.role}
+        </span>
+      </div>
+      <h3 className="mt-2 line-clamp-2 min-h-[2.1em] font-display text-[13px] font-extrabold uppercase leading-[1.05] tracking-tight text-ink">
+        {member.name}
+      </h3>
+      <p className="mt-0.5 truncate font-mono text-[10px] font-bold text-ink/70">{member.branchYear}</p>
+      <div className="mt-2 flex gap-2">
+        <ProfileButtons member={member} />
+      </div>
+    </li>
+  );
+}
+
+function LeadRow({ member }: { member: TeamMember }) {
+  const style = ROLE_STYLES[member.role];
+  return (
+    <li className="flex items-center gap-3 rounded-[8px] border-[3px] border-ink bg-white p-2 shadow-[4px_4px_0_#111]">
+      <div className="relative h-[68px] w-[68px] shrink-0 overflow-hidden rounded-[5px] border-[3px] border-ink bg-cream">
+        <MiniPhoto member={member} sizes="68px" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <span
+          className={`inline-block max-w-full truncate rounded-[3px] border-2 border-ink px-1.5 py-px font-mono text-[9px] font-extrabold uppercase ${style.roleBg}`}
+        >
+          {member.role}
+        </span>
+        <h3 className="mt-1 line-clamp-2 font-display text-[15px] font-extrabold uppercase leading-[1.05] tracking-tight text-ink">
+          {member.name}
+        </h3>
+        <p className="mt-0.5 truncate font-mono text-[10px] font-bold text-ink/70">{member.branchYear}</p>
+      </div>
+      <div className="flex w-11 shrink-0 flex-col gap-1.5">
+        <ProfileButtons member={member} />
+      </div>
+    </li>
   );
 }
 
@@ -515,23 +564,37 @@ export default function Team() {
             </h2>
           </div>
 
-          <p className="max-w-md font-mono text-xs sm:text-sm font-bold text-ink/80">
+          <p className="hidden max-w-md font-mono text-sm font-bold text-ink/80 sm:block">
             {"// Hover or tap a badge to flip it. Tap again to flip back."}
           </p>
         </div>
 
-        {/* Tier 1: Core leadership — 3 Organisers + Co-Lead, one full row of 4 */}
+        {/* Tier 1: Core leadership (3 Organisers + Co-Lead) */}
         <TierLabel label="Core leadership" count={LEADERSHIP.length} bg="bg-g-blue text-white" />
-        <SwipeRow label="Core leadership" gridClass="sm:grid-cols-2 lg:grid-cols-4" reducedMotion={prefersReducedMotion}>
+        <ul aria-label="Core leadership" className="grid grid-cols-2 gap-3 sm:hidden">
+          {LEADERSHIP.map((m) => (
+            <LeaderTile key={m.id} member={m} />
+          ))}
+        </ul>
+        <div role="group" aria-label="Core leadership" className="hidden gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-4">
           {renderTier(LEADERSHIP, 0)}
-        </SwipeRow>
+        </div>
 
-        {/* Tier 2: Domain leads — 4-column grid below a divider */}
+        {/* Tier 2: Domain leads, below a divider */}
         <div className="mt-8 sm:mt-10 border-t-[3px] border-dashed border-ink/25 pt-6 sm:pt-8">
           <TierLabel label="Domain leads" count={DOMAIN_LEADS.length} bg="bg-g-green text-ink" />
-          <SwipeRow label="Domain leads" gridClass="sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" reducedMotion={prefersReducedMotion}>
+          <ul aria-label="Domain leads" className="flex flex-col gap-3 sm:hidden">
+            {DOMAIN_LEADS.map((m) => (
+              <LeadRow key={m.id} member={m} />
+            ))}
+          </ul>
+          <div
+            role="group"
+            aria-label="Domain leads"
+            className="hidden gap-5 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+          >
             {renderTier(DOMAIN_LEADS, LEADERSHIP.length)}
-          </SwipeRow>
+          </div>
         </div>
       </div>
     </section>
