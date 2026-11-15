@@ -117,7 +117,7 @@ export default function EventSpotlight() {
         {/* Section Kicker */}
         <div className="mb-5 flex items-center justify-between flex-wrap gap-3">
           <div className="inline-flex items-center gap-2 rounded-[4px] border-[3px] border-ink bg-g-yellow px-3 py-1 font-mono text-xs font-extrabold uppercase text-ink shadow-[3px_3px_0_#111]">
-            <span>02 — // upcoming spotlight</span>
+            <span>02 — upcoming spotlight</span>
           </div>
           <span className="font-mono text-xs font-bold uppercase text-ink/75">
             FREE · REGISTRATION OPEN
@@ -162,7 +162,7 @@ export default function EventSpotlight() {
                   priority
                 />
                 <div className="flex items-center justify-between border-t-[3px] border-ink bg-g-green px-3 py-1.5 font-mono text-[11px] font-extrabold text-ink">
-                  <span>EVT_ID // INAUGURATION-VIIT-2026</span>
+                  <span>Inauguration · VIIT 2026</span>
                   <span>IN-PERSON · 1 DAY</span>
                 </div>
               </div>
@@ -189,7 +189,7 @@ export default function EventSpotlight() {
               <div className="mt-4 grid w-full grid-cols-2 gap-3">
                 <div className="rounded-[6px] border-[3px] border-ink bg-cream p-2 shadow-[3px_3px_0_#111]">
                   <span className="block font-mono text-[10px] font-bold uppercase text-ink/70">
-                    {"// DATE"}
+                    {"DATE"}
                   </span>
                   <span className="mt-0.5 block font-mono text-xs sm:text-sm font-extrabold text-ink">
                     NOV 16 · 10 AM
@@ -198,7 +198,7 @@ export default function EventSpotlight() {
 
                 <div className="rounded-[6px] border-[3px] border-ink bg-cream p-2 shadow-[3px_3px_0_#111]">
                   <span className="block font-mono text-[10px] font-bold uppercase text-ink/70">
-                    {"// VENUE"}
+                    {"VENUE"}
                   </span>
                   <span className="mt-0.5 block font-mono text-xs sm:text-sm font-extrabold text-ink">
                     VIIT Campus, Duvvada
@@ -209,7 +209,7 @@ export default function EventSpotlight() {
               {/* Live Flip/Slide Countdown */}
               <div className="mt-4 w-full max-w-md">
                 <div className="mb-1.5 flex items-center justify-between font-mono text-[11px] font-extrabold uppercase text-ink/80">
-                  <span>{"// T-MINUS COUNTDOWN"}</span>
+                  <span>{"T-MINUS COUNTDOWN"}</span>
                   <span className="inline-flex items-center gap-1.5">
                     <span className="h-2 w-2 rounded-full bg-g-red animate-ping" />
                     <span>LIVE CLOCK</span>

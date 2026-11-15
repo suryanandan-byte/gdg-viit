@@ -317,7 +317,7 @@ export default function AboutBento() {
           </div>
 
           <p className="max-w-md font-mono text-xs sm:text-sm font-bold text-ink/80">
-            {"// Six ways we turn theory into shipped code."}
+            {"Six ways we turn theory into shipped code."}
           </p>
         </div>
 

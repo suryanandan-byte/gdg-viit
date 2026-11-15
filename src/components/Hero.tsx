@@ -192,7 +192,7 @@ export default function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-g-green opacity-75 motion-reduce:hidden" />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full border-2 border-ink bg-g-green" />
               </span>
-              <span>{"// google developer groups on campus"}</span>
+              <span>{"google developer groups on campus"}</span>
             </motion.div>
 
             <h1

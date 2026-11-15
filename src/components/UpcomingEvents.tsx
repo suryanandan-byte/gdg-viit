@@ -99,7 +99,7 @@ export default function UpcomingEvents() {
           </div>
 
           <p className="max-w-sm font-mono text-xs font-bold text-ink/80">
-            {"// Free for all VIIT students. Grab a seat early."}
+            {"Free for all VIIT students. Grab a seat early."}
           </p>
         </div>
 

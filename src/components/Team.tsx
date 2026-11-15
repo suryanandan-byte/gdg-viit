@@ -343,11 +343,6 @@ function IdCard({ member, badgeNo, delay, isFlipped, onToggle, springConfig, red
             <p className="mt-1.5 text-[11px] sm:text-sm font-semibold leading-snug text-ink">
               {style.focus}
             </p>
-            <div className="mt-2 border-t-2 border-ink/20 pt-1.5">
-              <span className="block truncate font-mono text-[10px] sm:text-xs font-extrabold text-ink">
-                {style.stack}
-              </span>
-            </div>
           </div>
 
           {/* Social Links & Barcode Strip */}
@@ -565,7 +560,7 @@ export default function Team() {
           </div>
 
           <p className="hidden max-w-md font-mono text-sm font-bold text-ink/80 sm:block">
-            {"// Hover or tap a badge to flip it. Tap again to flip back."}
+            {"Hover or tap a badge to flip it. Tap again to flip back."}
           </p>
         </div>
 

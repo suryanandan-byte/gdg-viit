@@ -35,7 +35,7 @@ export default function JoinCta() {
           transition={stampSpring}
           className="mb-4 inline-flex items-center gap-2 rounded-[4px] bg-g-yellow px-4 py-1.5 font-mono text-xs sm:text-sm font-extrabold uppercase tracking-wider text-ink brutal-sticker"
         >
-          <span>{'// git commit -m "join gdg-viit"'}</span>
+          <span>Join GDG on Campus VIIT</span>
         </motion.div>
 
         {/* Huge White Headline */}

@@ -64,7 +64,7 @@ export default function Navbar() {
                 GDG on Campus · VIIT
               </span>
               <span className="font-mono text-[11px] font-bold tracking-wider uppercase text-ink/75 mt-0.5">
-                Visakhapatnam // IN
+                Visakhapatnam · IN
               </span>
             </div>
           </a>
@@ -142,7 +142,7 @@ export default function Navbar() {
           >
             <div className="flex flex-col gap-3">
               <div className="font-mono text-xs font-bold uppercase tracking-widest text-ink/70 pb-1 border-b-2 border-ink">
-                {"// Navigation Directory"}
+                {"Navigation Directory"}
               </div>
               {NAV_LINKS.map((link, idx) => (
                 <motion.a

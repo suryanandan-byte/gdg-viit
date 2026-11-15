@@ -83,7 +83,7 @@ export default function Footer() {
           {/* Column 2: Navigation */}
           <div className="md:col-span-3">
             <h2 className="font-mono text-xs font-extrabold uppercase tracking-widest text-g-yellow">
-              {"// Navigation"}
+              {"Navigation"}
             </h2>
             <ul className="mt-4 flex flex-col gap-2.5 font-mono text-sm font-bold">
               <li>
@@ -127,7 +127,7 @@ export default function Footer() {
           {/* Column 3: Social Handles (vertical) */}
           <div className="md:col-span-4">
             <h2 className="font-mono text-xs font-extrabold uppercase tracking-widest text-g-green">
-              {"// Social Handles"}
+              {"Social Handles"}
             </h2>
             <ul className="mt-4 flex flex-col gap-3">
               {SOCIAL_LINKS.map((soc) => (
